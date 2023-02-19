@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="669.0" prefWidth="1110.0" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet_transport.loginController">
+    <children>
+      <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="634.0" prefWidth="1100.0">
+         <children>
+            <Pane fx:id="layout1" layoutX="522.0" layoutY="101.0" prefHeight="529.0" prefWidth="547.0">
+               <children>
+                  <Label fx:id="layout1_label1" layoutX="80.0" layoutY="27.0" prefHeight="100.0" prefWidth="511.0" text="Connectez-vous a transport">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="layout1_sign_in" layoutX="191.0" layoutY="339.0" mnemonicParsing="false" onAction="#connexion" prefHeight="52.0" prefWidth="178.0" text="Connexion" textFill="WHITE" />
+                  <TextField fx:id="c_nom" layoutX="153.0" layoutY="153.0" prefHeight="41.0" prefWidth="262.0" promptText="Nom utilisateur ou email" />
+                  <TextField fx:id="c_passe" layoutX="153.0" layoutY="196.0" prefHeight="41.0" prefWidth="262.0" promptText="Mot passe" />
+                  <Label layoutX="167.0" layoutY="285.0" prefHeight="21.0" prefWidth="207.0" text="Mot passe oublier ?" textFill="#8d8d8d">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="layout2" layoutX="23.0" layoutY="34.0" prefHeight="578.0" prefWidth="511.0">
+               <children>
+                  <Label fx:id="layout1_label11" layoutX="218.0" layoutY="-49.0" prefHeight="100.0" prefWidth="196.0" text="Inscription !">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="i_nom" layoutX="153.0" layoutY="98.0" prefHeight="41.0" prefWidth="312.0" promptText="Nom" />
+                  <TextField fx:id="i_prenom" layoutX="153.0" layoutY="139.0" prefHeight="41.0" prefWidth="312.0" promptText="Prenom" />
+                  <TextField fx:id="i_email" layoutX="153.0" layoutY="180.0" prefHeight="41.0" prefWidth="312.0" promptText="Email" />
+                  <DatePicker fx:id="i_date" editable="false" layoutX="153.0" layoutY="222.0" prefHeight="41.0" prefWidth="312.0" promptText="Date_naissance" />
+                  <TextField fx:id="i_telephone" layoutX="153.0" layoutY="264.0" prefHeight="41.0" prefWidth="312.0" promptText="Telephone" />
+                  <TextField fx:id="i_region" layoutX="153.0" layoutY="305.0" prefHeight="41.0" prefWidth="312.0" promptText="Region" />
+                  <PasswordField fx:id="i_passe" layoutX="153.0" layoutY="347.0" prefHeight="41.0" prefWidth="312.0" promptText="Mot_passe" />
+                  <PasswordField fx:id="i_passec" layoutX="153.0" layoutY="390.0" prefHeight="41.0" prefWidth="312.0" promptText="Retaper mot passe" />
+                  <RadioButton fx:id="i_h" layoutX="193.0" layoutY="462.0" mnemonicParsing="false" selected="true" text="Homme">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="i_grenre" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="i_f" layoutX="284.0" layoutY="462.0" mnemonicParsing="false" text="Femme" toggleGroup="$i_grenre" />
+                  <RadioButton fx:id="i_a" layoutX="374.0" layoutY="462.0" mnemonicParsing="false" text="Autre" toggleGroup="$i_grenre" />
+                  <Button fx:id="layout2_sign_in" layoutX="223.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#inscription" prefHeight="52.0" prefWidth="178.0" text="Inscrivez-vous" textFill="WHITE" />
+                  <Label fx:id="lb_vide" layoutX="156.0" layoutY="63.0" prefHeight="30.0" prefWidth="374.0" text="veuillez remplir le formulaire suivant:" textFill="#e80a0a">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_ajout" layoutX="154.0" layoutY="63.0" prefHeight="30.0" prefWidth="374.0" text="Ajout avec succes" textFill="#5fa817">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_nom" layoutX="155.0" layoutY="63.0" prefHeight="30.0" prefWidth="374.0" text="Nom doit etres alphabetique" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_prenom" layoutX="156.0" layoutY="63.0" prefHeight="30.0" prefWidth="374.0" text="Prenom doit etres alphabetique" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_region" layoutX="156.0" layoutY="65.0" prefHeight="30.0" prefWidth="374.0" text="Region doit etres alphabetique" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_email" layoutX="164.0" layoutY="66.0" prefHeight="30.0" prefWidth="374.0" text="Email existe deja !!" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_tell" layoutX="164.0" layoutY="66.0" prefHeight="30.0" prefWidth="374.0" text="Telephone comporte au minimum 8 chiffre" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_passe" layoutX="169.0" layoutY="66.0" prefHeight="30.0" prefWidth="374.0" text="Mot passe ne sont pas identique" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="f_nom" layoutX="125.0" layoutY="110.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_prenom" layoutX="126.0" layoutY="152.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_email" layoutX="125.0" layoutY="192.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_tel" layoutX="125.0" layoutY="276.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_region" layoutX="125.0" layoutY="318.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_passec" layoutX="124.0" layoutY="359.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="f_passe" layoutX="124.0" layoutY="402.0" text="----&gt;" textFill="#eb0c0c" visible="false" />
+                  <Label fx:id="lb_email1" layoutX="154.0" layoutY="66.0" prefHeight="30.0" prefWidth="374.0" text="Verifier le format de votre email !!" textFill="#e80a0a" visible="false">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchor" prefHeight="677.0" prefWidth="374.0" style="-fx-background-color: #073064;">
+         <children>
+            <Pane fx:id="left" layoutX="146.0" layoutY="84.0" prefHeight="537.0" prefWidth="216.0">
+               <children>
+                  <Label fx:id="layout2_label1" layoutX="-54.0" layoutY="74.0" prefHeight="66.0" prefWidth="239.0" text="Bonjour  !" textFill="WHITE">
+                     <font>
+                        <Font size="45.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="layout2_label2" layoutX="-107.0" layoutY="183.0" prefHeight="80.0" prefWidth="306.0" text="Entrez vos informations personnelles &#10;et commencez la journée avec nous" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="layout2_inscrit" layoutX="-59.0" layoutY="392.0" prefHeight="21.0" prefWidth="233.0" text="Vous etes pas encore inscrit ?" textFill="#8d8d8d">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="layout2_sign_up" layoutX="-53.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#swip_right_btn" prefHeight="41.0" prefWidth="178.0" text="Inscrivez-vous" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="right" layoutX="78.0" layoutY="98.0" prefHeight="537.0" prefWidth="283.0" AnchorPane.topAnchor="98.0">
+               <children>
+                  <Label fx:id="layout2_label11" layoutX="-2.0" layoutY="86.0" prefHeight="66.0" prefWidth="239.0" text="Inscription" textFill="WHITE">
+                     <font>
+                        <Font size="45.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="layout2_label21" layoutX="-17.0" layoutY="199.0" prefHeight="80.0" prefWidth="306.0" text="Merci de bien vouloir vérifier &#10;vos informations personnelles &#10;&#10; " textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="layout2_inscrit2" layoutY="390.0" prefHeight="21.0" prefWidth="207.0" text="Vous avez deja un compte ?" textFill="#8d8d8d">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="layout2_sign_up" layoutX="8.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#swip_left_btn" prefHeight="52.0" prefWidth="178.0" text="Se connecter" textFill="WHITE" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
