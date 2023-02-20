@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/gui/Reparation.fxml</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/Entities/Employee.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/interfaces/InterfaceCRUD.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/gui/Employee.fxml</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/controller/EmployeeController.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/services/EmployeeCRUD.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/services/ReparationCRUD.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/utils/MyConnection.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/controller/ReparationController.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/Entities/Reparation.java</file>
+            <file>file:/C:/Users/yosra/Documents/NetBeansProjects/Projet_transport/src/projet_transport/Main.java</file>
+        </group>
+    </open-files>
+</project-private>

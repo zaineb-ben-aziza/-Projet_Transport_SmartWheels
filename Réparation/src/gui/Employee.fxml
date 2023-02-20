@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EmployeeController">
+   <children>
+      <Pane layoutX="22.0" layoutY="121.0" prefHeight="250.0" prefWidth="384.0">
+         <children>
+            <Label layoutX="13.0" layoutY="84.0" text="Identifiant:" />
+            <Label layoutX="27.0" layoutY="161.0" text="Type:" />
+            <Label layoutX="27.0" layoutY="122.0" text="Nom:" />
+            <TextField layoutX="118.0" layoutY="80.0" />
+            <TextField layoutX="118.0" layoutY="118.0" />
+            <TextField layoutX="118.0" layoutY="166.0" />
+         </children>
+      </Pane>
+      <Label layoutX="189.0" layoutY="52.0" prefHeight="46.0" prefWidth="190.0" text="  Employee" textAlignment="CENTER" textFill="#21b92b">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <TableView layoutX="396.0" layoutY="147.0" prefHeight="258.0" prefWidth="236.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Identifiant" />
+            <TableColumn prefWidth="88.79998779296875" text="Description " />
+            <TableColumn prefWidth="71.20001220703125" text="Type" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
