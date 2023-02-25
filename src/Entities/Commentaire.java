@@ -7,7 +7,7 @@ package Entities;
 
 
 public class Commentaire {
-      private int id_com;
+    private int id_com;
    private String contenu;
 
     public Commentaire(int id_com, String contenu) {
@@ -16,7 +16,8 @@ public class Commentaire {
     }
 
     public Commentaire() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         this.id_com = 0;
+        this.contenu = "";
     }
 
     public int getId_com() {

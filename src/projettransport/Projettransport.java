@@ -20,7 +20,7 @@ public class Projettransport extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Views/FXMLDocument.fxml"));
-        
+        //Parent root = FXMLLoader.load(getClass().getResource("/Views/FXMLDocumentb.fxml"));
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

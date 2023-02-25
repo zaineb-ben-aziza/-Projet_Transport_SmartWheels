@@ -83,5 +83,13 @@ public void updateReclamation(int id,Reclamation R){
         }
         return myList;
     }
+    public boolean contentExist(Reclamation r){
+        for(Reclamation rr:listeDesReclamations()){
+            if(rr.getAdresse().equals(r.getAdresse())&& rr.getContenu().equals(r.getContenu())&& rr.getNom().equals(r.getNom())&&rr.getPrenom().equals(r.getPrenom())){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

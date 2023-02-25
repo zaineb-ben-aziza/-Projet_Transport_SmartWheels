@@ -11,6 +11,7 @@ import Services.CommentaireCrud;
 import Services.ReclamationCrud;
 import Utils.MyConnection;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +24,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import static sun.security.jgss.GSSUtil.login;
 
 /**
@@ -89,14 +94,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button btnDeleteCmntr;
     @FXML
-    private TableView<?> tvcommentaire;
+    private TableView<Commentaire> tvcommentaire;
     @FXML
-    private TableColumn<?, ?> colpseudo;
+    private TableColumn<Commentaire,?> colpseudo;
     @FXML
-    private TableColumn<?, ?> colcommentaire;
+    private TableColumn<Commentaire, String> colcommentaire;
+    @FXML
+    private TextField tfidcom;
+    @FXML
+    private Button btn_vehicule;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         showReclamation();
+        showCommentaire();
     }
     
         
@@ -117,23 +127,9 @@ coladresse.setCellValueFactory(new PropertyValueFactory<>("Adresse"));
 colcontenu.setCellValueFactory(new PropertyValueFactory<>("Contenu"));
 tvreclamation.setItems(List);
 }
-/*Partie commentaire */
-public ObservableList<Commentaire>getCommentaireList(){
-ObservableList<Reclamation> CommentaireList= FXCollections.observableArrayList();
-CommentaireList.addAll(cmntr.listeDesCommentaires());
-return CommentaireList; 
 
-}  
-public void showCommentaire(){
+/*ajout modifier et supprimer pour la reclamation */
 
-ObservableList<Reclamation> List =getReclamationList();
-colid.setCellValueFactory(new PropertyValueFactory<>("Id"));
-colnom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
-colprenom.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
-coladresse.setCellValueFactory(new PropertyValueFactory<>("Adresse"));
-colcontenu.setCellValueFactory(new PropertyValueFactory<>("Contenu"));
-tvreclamation.setItems(List);
-}
 
     @FXML
     private void insert(ActionEvent event) {
@@ -143,17 +139,26 @@ tvreclamation.setItems(List);
         alert.setContentText(ControleSaisie());
         alert.showAndWait();}
         else {
+            
         Reclamation r =new Reclamation();
         r.setNom(tfnom.getText());
         r.setPrenom(tfprenom.getText());
         r.setAdresse(tfadresse.getText());
         r.setContenu(tfcontenu.getText());
-        rc.ajouterEntitee(r);
-        showReclamation();}
+        if(rc.contentExist(r)){
+            Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ajout Reclamation");
+        alert.setContentText("Reclamation existe deja!!");
+        alert.showAndWait();
+        }
+        else{
+            rc.ajouterEntitee(r);
+        showReclamation();
+        }
+        }
 
 
     }
-
     @FXML
     private void update(ActionEvent event) {
          Alert alert =new Alert(Alert.AlertType.WARNING);
@@ -200,17 +205,82 @@ if (!pattern.matcher(tfadresse.getText().trim()).matches()) {
 return erreur;
 
 }
+/*Partie commentaire */
+public ObservableList<Commentaire>getCommentaireList(){
+ObservableList<Commentaire> CommentaireList= FXCollections.observableArrayList();
+CommentaireList.addAll(cmntr.listeDesCommentaires());
+return CommentaireList; 
+
+}  
+public void showCommentaire(){
+
+ObservableList<Commentaire> List =getCommentaireList();
+colpseudo.setCellValueFactory(new PropertyValueFactory<>("id_com"));
+
+colcommentaire.setCellValueFactory(new PropertyValueFactory<>("contenu"));
+   
+tvcommentaire.setItems(List);
+}
+/*ajout modifier et supprimer pour les commentaires */
+
 
     @FXML
     private void InsertCmntr(ActionEvent event) {
+         if (ControleCmntr().length()>0){
+         Alert alert =new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("done");
+        alert.setContentText(ControleSaisie());
+        alert.showAndWait();}
+        else {
+        Commentaire r =new Commentaire();
+        r.setContenu(tfCmntr.getText());
+        
+        cmntr.ajouterCommentaire(r);
+        showCommentaire();}
     }
 
     @FXML
     private void UpdateCmntr(ActionEvent event) {
+         Alert alert =new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("confirmer la modification");
+        alert.setContentText("voulez vous vraiment modifier");
+        alert.showAndWait();
+         Commentaire r =new Commentaire();
+         int idModifier=tvcommentaire.getSelectionModel().getSelectedItem().getId_com();
+        r.setContenu(tfCmntr.getText());
+       
+        cmntr.updateCommentaire(idModifier, r);
+        showCommentaire();
     }
 
     @FXML
     private void DeleteCmntr(ActionEvent event) {
+         Alert alert =new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("confirmer la suppression");
+        alert.setContentText("voulez vous vraiment supprimer ?");
+        alert.showAndWait();
+        int idSup=tvcommentaire.getSelectionModel().getSelectedItem().getId_com();
+        cmntr.supprimerCommentaire(idSup);
+        showCommentaire();
+    }
+    private String ControleCmntr(){
+
+    String erreur="";
+if(tfCmntr.getText().trim().isEmpty()){
+erreur+="nom vide \n";}
+
+return erreur;
+
+}
+
+    @FXML
+    private void btn_vehicule(ActionEvent event) throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Views/GestionCommentaire.fxml"));
+           Parent root1 = (Parent) fxmlLoader.load();
+           Stage stage = new Stage();
+           stage.setScene(new Scene(root1));
+           stage.show();
+        
     }
    
 }

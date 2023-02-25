@@ -5,6 +5,8 @@
  */
 package Entities;
 
+import java.util.Objects;
+
 /**
  *
  * @author user
@@ -67,6 +69,8 @@ public class Reclamation {
     public void setContenu(String Contenu) {
         this.Contenu = Contenu;
     }
+
+   
     @Override
     public String toString() {
         return "Reclamation{" + "Id=" + Id + ", Nom=" + Nom + ", Prenom=" + Prenom + ", Adresse=" + Adresse + ", Contenu=" + Contenu + '}';
