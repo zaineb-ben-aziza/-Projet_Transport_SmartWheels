@@ -216,7 +216,7 @@ public void SetAllTextField()
                 {
           
         Reservation v= new Reservation(Integer.parseInt(id_res.getText()),date_debut.getValue().toString(),date_fin.getValue().toString());
-           
+
             Reservation_Service rs= new Reservation_Service();
      
             if(!rs.GetAllIdUser().contains(String.valueOf(v.getId_res())))

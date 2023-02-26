@@ -60,29 +60,30 @@ public class Statistique_ReservationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
           Reservation_Service s=new Reservation_Service();
-         ObservableList<Reservation> l= s.afficher_reservation();
-         String []data ={"A","b","A","b","A","b","A","b","A","b","A","b","A","b"};
-         for (int i=0;i<l.size();i++)
-         {
-         data[i]= String.valueOf(Integer.parseInt(l.get(i).getDate_fin().substring(8, 10) )- Integer.parseInt(l.get(i).getDate_debut().substring(8, 10))) ;
-         }
-         for (int i=0;i<l.size();i++)
-        System.out.println(data[i]);
+ObservableList<Reservation> l= s.afficher_reservation();
+String[] data = new String[l.size()];
+for (int i = 0; i < l.size(); i++) {
+    data[i] = String.valueOf(Integer.parseInt(l.get(i).getDate_fin().substring(8, 10)) - Integer.parseInt(l.get(i).getDate_debut().substring(8, 10)));
+}
+for (int i = 0; i < l.size(); i++) {
+    System.out.println(data[i]);
+}
 
-        // calcul de la fréquence de chaque élément
-        Map<String, Integer> frequencyMap = new HashMap<>();
-        Arrays.stream(data).forEach(element -> frequencyMap.merge(element, 1, Integer::sum));
+// calcul de la fréquence de chaque élément
+Map<String, Integer> frequencyMap = new HashMap<>();
+Arrays.stream(data).forEach(element -> frequencyMap.merge(element, 1, Integer::sum));
 
-        // création d'un graphique à barres pour représenter la fréquence de chaque élément
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        XYChart.Series<String, Integer> series = new XYChart.Series<>();
-        frequencyMap.forEach((key, value) -> series.getData().add(new XYChart.Data<>(key, value)));
-        chart.getData().add(series);
-        chart.setTitle("Fréquence de chaque élément");
-        xAxis.setLabel("Élément");
-        yAxis.setLabel("Fréquence");
-        chart.setLegendVisible(false);
+// création d'un graphique à barres pour représenter la fréquence de chaque élément
+CategoryAxis xAxis = new CategoryAxis();
+NumberAxis yAxis = new NumberAxis();
+XYChart.Series<String, Integer> series = new XYChart.Series<>();
+frequencyMap.forEach((key, value) -> series.getData().add(new XYChart.Data<>(key, value)));
+chart.getData().add(series);
+chart.setTitle("Fréquence de chaque élément");
+xAxis.setLabel("Élément");
+yAxis.setLabel("Fréquence");
+chart.setLegendVisible(false);
+
         // TODO
     }    
 

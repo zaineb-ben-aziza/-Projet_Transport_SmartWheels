@@ -19,6 +19,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -46,6 +49,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import services.Reservation_Service;
+import utils.MyConnexion;
 
 /**
  * FXML Controller class
@@ -60,13 +64,66 @@ public class FrontReservationController implements Initializable {
     private Pane left;
     @FXML
     private Button back;
+ 
+    @FXML
+    private Label marquelabel1;
+    @FXML
+    private Label marquelabel2;
+    @FXML
+    private Label marquelabel3;
+    @FXML
+    private Label couleurlabel1;
+    @FXML
+    private Label couleurlabel2;
+    @FXML
+    private Label couleurlabel3;
+    @FXML
+    private Label vitesselabel1;
+    @FXML
+    private Label vitesselabel2;
+    @FXML
+    private Label vitesselabel3;
+ 
 
     /**
      * Initializes the controller class.
-     */
+     */ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+         
+           String selectQuery = "SELECT marque ,couleur,vitesse_max FROM vehicule WHERE id = ?";
+        try {
+           PreparedStatement ps= MyConnexion.getIstance().getCnx().prepareStatement(selectQuery);
+            for (int i = 1; i <= 6; i++) {
+                ps.setInt(1, i); // id du véhicule à récupérer
+                ResultSet resultSet = ps.executeQuery();
+                if (resultSet.next()) {
+                    String marque = resultSet.getString("marque");
+                    String couleur = resultSet.getString("couleur");
+                    String vitesse_max = resultSet.getString("vitesse_max");
+                    if (i == 1) {
+                        marquelabel1.setText("Marque : " + marque);
+                        couleurlabel1.setText("couleur : " + couleur);
+                        vitesselabel1.setText("vitesseMax: " + vitesse_max);
+                    } else if (i == 2) {
+                        marquelabel2.setText("Marque : " + marque);
+                         couleurlabel2.setText("couleur : " + couleur);
+                         vitesselabel2.setText("vitesseMax : " + vitesse_max);
+                    } else if (i == 3) {
+                        marquelabel3.setText("Marque : " + marque);
+                        couleurlabel3.setText("couleur : " + couleur);
+                        vitesselabel3.setText("vitesseMax: " + vitesse_max);
+                    }
+                }
+                
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }    
+          
+
     }    
 
     @FXML
@@ -132,6 +189,8 @@ public class FrontReservationController implements Initializable {
 
         }
     }
+    
+    
 
 
 }
