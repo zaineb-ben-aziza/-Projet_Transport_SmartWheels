@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -27,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -43,7 +45,7 @@ import services.Reservation_Service;
 public class Statistique_ReservationController implements Initializable {
 
     @FXML
-    private BarChart<String, Integer> chart;
+    private LineChart<String, Double> chart;
     int  d=java.time.LocalDate.now().getDayOfMonth();
     @FXML
     private AnchorPane contentArea;
@@ -59,30 +61,49 @@ public class Statistique_ReservationController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-          Reservation_Service s=new Reservation_Service();
-ObservableList<Reservation> l= s.afficher_reservation();
-String[] data = new String[l.size()];
+Reservation_Service s = new Reservation_Service();
+ObservableList<Reservation> l = s.afficher_reservation();
+
+// create arrays for the data series
+String[] durationData = new String[l.size()];
+double[] amountData = new double[l.size()];
+
+// populate the arrays with data from the reservations
 for (int i = 0; i < l.size(); i++) {
-    data[i] = String.valueOf(Integer.parseInt(l.get(i).getDate_fin().substring(8, 10)) - Integer.parseInt(l.get(i).getDate_debut().substring(8, 10)));
-}
-for (int i = 0; i < l.size(); i++) {
-    System.out.println(data[i]);
+    durationData[i] = String.valueOf(Integer.parseInt(l.get(i).getDate_fin().substring(8, 10)) - Integer.parseInt(l.get(i).getDate_debut().substring(8, 10)));
+    amountData[i] = l.get(i).getMontant();
 }
 
-// calcul de la fréquence de chaque élément
+// calculate the frequency of each duration
 Map<String, Integer> frequencyMap = new HashMap<>();
-Arrays.stream(data).forEach(element -> frequencyMap.merge(element, 1, Integer::sum));
+Arrays.stream(durationData).forEach(element -> frequencyMap.merge(element, 1, Integer::sum));
 
-// création d'un graphique à barres pour représenter la fréquence de chaque élément
+// create the duration data series
+XYChart.Series<String, Double> durationSeries = new XYChart.Series<>();
+durationSeries.setName("Durée de la réservation");
+frequencyMap.forEach((key, value) -> durationSeries.getData().add(new XYChart.Data<>(key, value.doubleValue())));
+
+// create the amount data series
+XYChart.Series<String, Double> amountSeries = new XYChart.Series<>();
+amountSeries.setName("Montant de la réservation");
+for (int i = 0; i < l.size(); i++) {
+    amountSeries.getData().add(new XYChart.Data<>(durationData[i], amountData[i]));
+}
+
+// create the chart
 CategoryAxis xAxis = new CategoryAxis();
 NumberAxis yAxis = new NumberAxis();
-XYChart.Series<String, Integer> series = new XYChart.Series<>();
-frequencyMap.forEach((key, value) -> series.getData().add(new XYChart.Data<>(key, value)));
-chart.getData().add(series);
-chart.setTitle("Fréquence de chaque élément");
-xAxis.setLabel("Élément");
-yAxis.setLabel("Fréquence");
-chart.setLegendVisible(false);
+// create the chart
+
+
+chart.setTitle("Fréquence et montant de chaque réservation");
+xAxis.setLabel("Durée de la réservation");
+yAxis.setLabel("Fréquence / Montant");
+chart.getData().addAll(durationSeries, amountSeries);
+
+
+
+
 
         // TODO
     }    
