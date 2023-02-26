@@ -59,7 +59,7 @@ public class vehicule_Service implements VehiculeCRUD<Vehicule> {
 
         public void Supprimer_Vehicule(int id) {
           try {
-            PreparedStatement ps=MyConnexion.getIstance().getCnx().prepareStatement("delete from reservation where id_res=?");
+            PreparedStatement ps=MyConnexion.getIstance().getCnx().prepareStatement("delete from vehicule where id=?");
             ps.setInt(1,id);
             ps.executeUpdate();
         } catch (Exception ex) {

@@ -18,6 +18,7 @@ import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import utils.MyConnexion;
 
 /**
@@ -43,7 +44,11 @@ public void ajouter_reservation(Reservation r)
              ps.executeUpdate();          
            
         } catch (Exception e) {
-            System.out.println(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setHeaderText(null);
+        alert.setContentText("cette vehicule a été déja réserver ou inéxistant!");
+        alert.showAndWait();
           
         }    
 

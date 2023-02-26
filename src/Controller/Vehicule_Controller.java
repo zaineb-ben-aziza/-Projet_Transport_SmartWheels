@@ -8,20 +8,20 @@ package Controller;
 
 
 import entities.Vehicule;
-import interfaces.VehiculeCRUD;
+
 import java.io.IOException;
 import services.vehicule_Service;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,6 +38,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
 
 
@@ -103,13 +105,16 @@ public class Vehicule_Controller implements Initializable {
     @FXML
     private TableColumn<?, ?> colprix;
     @FXML
-    private Button annuler;
-    @FXML
     private Button reservation;
     @FXML
     private AnchorPane contentArea;
+    @FXML
+    private TextField autoTextField;
 
-   
+     private AutoCompletionBinding<String> autoCompletionBinding;
+    @FXML
+    private Button recherche;
+ 
 
 
 
@@ -124,7 +129,7 @@ public class Vehicule_Controller implements Initializable {
       type.setItems(opt);
       
       //comboBox marque
-       ObservableList<String> opt1 =  FXCollections.observableArrayList("Xiaomi","NIU","IsinWheel","inomile","Evercross EV","HITWAY","RCB","Sixfox","Eleglide","DYU");
+       ObservableList<String> opt1 =  FXCollections.observableArrayList("Xiaomi","NIU","IsinWheel","Inomile","Evercross EV","HITWAY","RCB","Sixfox","Eleglide","DYU");
        marque.setPromptText("Marque de véhicule");
        marque.setItems(opt1);
        
@@ -146,6 +151,8 @@ tab.setOnMouseClicked(event ->{
 
         SetAllTextField();
         });
+//auto pick
+ TextFields.bindAutoCompletion(autoTextField,"Xiaomi","NIU","IsinWheel","Inomile","Evercross EV","HITWAY","RCB","Sixfox","Eleglide","DYU");
 
     }    
 
@@ -323,25 +330,33 @@ alert.showAndWait();
         
     }
 
-    @FXML
-    private void annuler(ActionEvent event) {
-     
-
-        
-    }
 
 
 
     @FXML
     private void reservation(ActionEvent event) throws IOException {
+        try{
+         Parent root = FXMLLoader.load(getClass().getResource("/gui/GestionDesReservations.fxml"));  
+         Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Probleme:"+e);
+        }
             
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/GestionDesReservations.fxml"));
-           Parent root1 = (Parent) fxmlLoader.load();
-           Stage stage = new Stage();
-           stage.setScene(new Scene(root1));
-           stage.show();
-          
- 
+    }
+
+    @FXML
+    private void chercher(ActionEvent event) {
+        
+      Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("ca !");
+            alert.showAndWait();  
+        
     }
 
 

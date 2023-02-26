@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -75,6 +76,8 @@ public class GestionDesReservationsController implements Initializable {
     private DatePicker date_debut;
     @FXML
     private DatePicker date_fin;
+    @FXML
+    private Button front;
 
     /**
      * Initializes the controller class.
@@ -108,12 +111,18 @@ public void SetAllTextField()
 
     @FXML
     private void btn_vehicule(ActionEvent event) throws IOException {
-        
-                   FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/GestionDesVehicules.fxml"));
-           Parent root1 = (Parent) fxmlLoader.load();
-           Stage stage = new Stage();
-           stage.setScene(new Scene(root1));
-           stage.show();
+         try{
+         Parent root = FXMLLoader.load(getClass().getResource("/gui/GestionDesVehicules.fxml"));  
+         Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Probleme:"+e);
+        }
+             
     }
     
     
@@ -155,13 +164,14 @@ public void SetAllTextField()
     private void modifier_reservation(ActionEvent event) {
                       if(!(id_res.getText().equals("") || date_debut.getValue().equals("")  || date_fin.getValue().equals("") || Duree.getText().equals("")))
                 {
+                
        Reservation_Service resS=new Reservation_Service();
         
         Reservation r_enregistre=resS.GetUserById(Integer.parseInt(id_res.getText()));
         
-        Reservation r= new Reservation(Integer.parseInt(id_res.getText()),date_debut.getValue().toString(),date_fin.getValue().toString(),Integer.parseInt(duree.getText()));
+        Reservation r= new Reservation(Integer.parseInt(id_res.getText()),date_debut.getValue().toString(),date_fin.getValue().toString(),Integer.parseInt(Duree.getText()));
            
-        
+                 
          if (!(r.getId_res()==(r_enregistre.getId_res()) 
                && r.getDate_debut().equals(r_enregistre.getDate_debut()) 
                && r.getDate_fin().equals(r_enregistre.getDate_fin()) 
@@ -263,6 +273,22 @@ Reservation_Service vs= new Reservation_Service();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate localDate = LocalDate.parse(dateString, formatter);
     return localDate;
+        
+    }
+
+    @FXML
+    private void front(ActionEvent event) throws IOException {
+         try{
+         Parent root = FXMLLoader.load(getClass().getResource("/gui/frontReservation.fxml"));  
+         Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Probleme:"+e);
+        }
         
     }
     
