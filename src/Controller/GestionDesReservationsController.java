@@ -12,6 +12,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -215,26 +216,43 @@ public void SetAllTextField()
        if(!(id_res.getText().equals("") || date_debut.getValue().equals("")  || date_fin.getValue().equals("")))
                 {
           
-        Reservation v= new Reservation(Integer.parseInt(id_res.getText()),date_debut.getValue().toString(),date_fin.getValue().toString());
+try {
+    LocalDate dateDebut = LocalDate.parse(date_debut.getValue().toString());
+    LocalDate dateFin = LocalDate.parse(date_fin.getValue().toString());
+    
+    if (dateDebut.isAfter(dateFin)) {
+        Alert alertDate = new Alert(Alert.AlertType.ERROR);
+        alertDate.setTitle("Erreur de saisie");
+        alertDate.setHeaderText(null);
+        alertDate.setContentText("La date de début doit être antérieure à la date de fin");
+        alertDate.showAndWait();
+        return;
+    }
+    
+    else {
+        Reservation r = new Reservation(Integer.parseInt(id_res.getText()), dateDebut.toString(), dateFin.toString());
+    Reservation_Service a = new Reservation_Service();
+    a.ajouter_reservation(r);
+     a.afficher_reservation();
+    Alert al = new Alert(Alert.AlertType.INFORMATION);
+    al.setTitle("Réservation effectuée");
+    al.setHeaderText(null);
+    al.setContentText("Votre réservation a été faite.");
+    al.showAndWait();
+    this.afficher();
+   
+    }
+    
+    // Les dates sont valides, vous pouvez créer votre objet Reservation
 
-            Reservation_Service rs= new Reservation_Service();
-     
-            if(!rs.GetAllIdUser().contains(String.valueOf(v.getId_res())))
-        {
-            rs.ajouter_reservation(v);
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText("Ajout avec succées!");
-            alert.showAndWait();
-        
-        this.afficher();
-        }
-               else{
-        Alert alert = new Alert(AlertType.ERROR);
-alert.setTitle("Error alert");
-alert.setHeaderText("l'identifiant N° "+v.getId_res()+" existe déja");
-alert.showAndWait();
-        }
+} catch (DateTimeParseException e) {
+    Alert alertDate = new Alert(Alert.AlertType.ERROR);
+    alertDate.setTitle("Erreur de saisie");
+    alertDate.setHeaderText(null);
+    alertDate.setContentText("Veuillez saisir des dates valides au format YYYY-MM-DD.");
+    alertDate.showAndWait();
+    return;
+}       
                 }
        
        

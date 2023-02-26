@@ -22,6 +22,7 @@ import java.net.URLEncoder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -147,47 +148,59 @@ public class FrontReservationController implements Initializable {
      
   
      // Création de l'alerte
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Saisie de plusieurs champs");
-        alert.setHeaderText(null);
-        alert.setContentText("Veuillez saisir les informations :");
+Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+alert.setTitle("Saisie de plusieurs champs");
+alert.setHeaderText(null);
+alert.setContentText("Veuillez saisir les informations :");
 
-        // Création des champs de saisie
-        TextField champId = new TextField();
-        DatePicker champDateDebut = new DatePicker();
-        champDateDebut.setPromptText("YYYY-MM-DD");
-        DatePicker champDateFin = new DatePicker();
-        champDateFin.setPromptText("YYYY-MM-DD");
-       
+// Création des champs de saisie
+TextField champId = new TextField();
+DatePicker champDateDebut = new DatePicker();
+champDateDebut.setPromptText("YYYY-MM-DD");
+DatePicker champDateFin = new DatePicker();
+champDateFin.setPromptText("YYYY-MM-DD");
 
-        // Création du GridPane pour les champs de saisie
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-       
-        grid.add(new Label("Identifiant:"), 0, 0);
-        grid.add(champId, 1, 0);
-        grid.add(new Label("Date de début:"), 0, 1);
-        grid.add(champDateDebut, 1, 1);
-        grid.add(new Label("Date de fin:"), 0, 2);
-        grid.add(champDateFin, 1, 2);
+// Création du GridPane pour les champs de saisie
+GridPane grid = new GridPane();
+grid.setHgap(10);
+grid.setVgap(10);
 
+grid.add(new Label("Identifiant:"), 0, 0);
+grid.add(champId, 1, 0);
+grid.add(new Label("Date de début:"), 0, 1);
+grid.add(champDateDebut, 1, 1);
+grid.add(new Label("Date de fin:"), 0, 2);
+grid.add(champDateFin, 1, 2);
 
-        // Ajout du GridPane à l'alerte
-        alert.getDialogPane().setContent(grid);
+// Ajout du GridPane à l'alerte
+alert.getDialogPane().setContent(grid);
 
-        // Affichage de l'alerte et récupération des valeurs saisies
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-        Reservation r= new Reservation(Integer.parseInt(champId.getText()),champDateDebut.getValue().toString(),champDateFin.getValue().toString());
-        Reservation_Service a=new Reservation_Service();
-        a.ajouter_reservation(r);
-           Alert al = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Réservation effectuée");
-        alert.setHeaderText(null);
-        alert.setContentText("Votre réservation a été faite.");
+// Affichage de l'alerte et récupération des valeurs saisies
+Optional<ButtonType> result = alert.showAndWait();
+if (result.isPresent() && result.get() == ButtonType.OK) {
+    // Vérification de la validité des dates
+    LocalDate dateDebut = champDateDebut.getValue();
+    LocalDate dateFin = champDateFin.getValue();
+    if (dateDebut == null || dateFin == null || dateDebut.isAfter(dateFin)) {
+        Alert al = new Alert(Alert.AlertType.ERROR);
+        al.setTitle("Erreur de saisie");
+        al.setHeaderText(null);
+        al.setContentText("Les dates saisies sont invalides!");
+        al.showAndWait();
+        return;
+    }
 
-        }
+    Reservation r = new Reservation(Integer.parseInt(champId.getText()), dateDebut.toString(), dateFin.toString());
+    Reservation_Service a = new Reservation_Service();
+    a.ajouter_reservation(r);
+
+    Alert al = new Alert(Alert.AlertType.INFORMATION);
+    al.setTitle("Réservation effectuée");
+    al.setHeaderText(null);
+    al.setContentText("Votre réservation a été faite");
+    al.showAndWait();
+}
+
     }
     
     
